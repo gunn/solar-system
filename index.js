@@ -1,13 +1,38 @@
 import React from 'react'
 import {render} from 'react-dom'
 
-const App = ({style})=>
-  <div>
-    <style>{style}</style>
-    <h1>Solar System</h1>
+class App extends React.Component {
+  constructor(...args) {
+    super(...args)
 
-    <SolarSystem />
-  </div>
+    this.state = {
+      width:  window.innerWidth,
+      height: window.innerHeight
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", ()=> {
+      this.setState({
+        width:  window.innerWidth,
+        height: window.innerHeight
+      })
+    })
+  }
+
+  render() {
+    const {style} = this.props
+
+    return (
+      <div>
+        <style>{style}</style>
+        <h1>Solar System</h1>
+    
+        <SolarSystem {...this.state} />
+      </div>
+    )
+  }
+}
 
 const PLANETS = [
   {
@@ -35,14 +60,16 @@ const orbitProps = ({orbit: {a}, color: stroke})=> (
   {r: a/500000, fill: "none", stroke, strokeWidth: 1}
 )
 
-const SolarSystem = ()=> {
+const SolarSystem = ({width, height})=> {
   return (
-    <svg>
-      {
-        PLANETS.map((props, i)=> (
-          <Planet key={i} {...props}/>
-        ))
-      }
+    <svg width={width} height={height}>
+      <g transform={`translate(${width/2} ${height/2})`}>
+        {
+          PLANETS.map((props, i)=> (
+            <Planet key={i} {...props}/>
+          ))
+        }
+      </g>
     </svg>
   )
 }
@@ -69,11 +96,6 @@ const STYLES = `
   html, body {
     margin: 0;
     padding: 0;
-  }
-
-  svg {
-    width: 100%;
-    height: 1000px;
   }
 `
 
