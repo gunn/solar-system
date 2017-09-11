@@ -9,7 +9,31 @@ const App = ({style})=>
     <SolarSystem />
   </div>
 
-const PLANETS = []
+const PLANETS = [
+  {
+    name: "Earth",
+    radius: 6371,
+    color: "#06f",
+    orbit: {
+      a: 149598023
+    }
+  },
+  {
+    name: "Mars",
+    radius: 3389.5,
+    color: "#C00",
+    orbit: {
+      a: 227939200
+    }
+  }
+]
+
+const bodyProps  = ({radius, color: fill})=> (
+  {r: radius/400, fill}
+)
+const orbitProps = ({orbit: {a}, color: stroke})=> (
+  {r: a/500000, fill: "none", stroke, strokeWidth: 1}
+)
 
 const SolarSystem = ()=> {
   return (
@@ -25,21 +49,31 @@ const SolarSystem = ()=> {
 
 const Planet = props=>
   <g>
-    <Body />
-    <Orbit />
+    <Body  {...bodyProps(props) }/>
+    <Orbit {...orbitProps(props)}/>
   </g>
 
-const Body = ()=>
-  <circle className="planet" r={10} fill="#06f" />
+const Body = props=>
+  <circle {...props}/>
 
-const Orbit = ()=>
-  <circle className="orbit" />
+const Orbit = props=>
+  <circle {...props} />
 
 
 const STYLES = `
   html, body {
     color: #CCC;
     background-color: #000;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  svg {
+    width: 100%;
+    height: 1000px;
   }
 `
 
