@@ -34,12 +34,31 @@ class App extends React.Component {
   }
 }
 
-const PLANETS = [  {
+const PLANETS = [{
   name: "Sun",
     radius: 16371,
     color: "#DD5",
     orbit: {
-      a: 0
+      a: 0,
+      P: 0
+    }
+  },
+  {
+  name: "Mercury",
+    radius: 2000,
+    color: "#fecdf5",
+    orbit: {
+      a: 57909050,
+      P: 0.240846
+    }
+  },
+  {
+  name: "Venus",
+    radius: 4000,
+    color: "#fefe00",
+    orbit: {
+      a: 108208000,
+      P: 0.615
     }
   },
   {
@@ -47,7 +66,8 @@ const PLANETS = [  {
     radius: 6371,
     color: "#06f",
     orbit: {
-      a: 149598023
+      a: 149598023,
+      P: 1
     }
   },
   {
@@ -55,26 +75,27 @@ const PLANETS = [  {
     radius: 3389.5,
     color: "#C00",
     orbit: {
-      a: 227939200
+      a: 227939200,
+      P: 1.881
     }
   }
 ]
 
-const bodyProps  = ({orbit: {a}, radius, color: fill})=> {
-  const displayOrbitRadius = a/500000
-  const t = new Date() / 2000
+const bodyProps  = ({orbit: {a, P}, radius, color: fill})=> {
+  const displayOrbitRadius = a/800000
+  const t = new Date() / 1000
 
   return {
     r: radius/400,
-    cx: Math.sin(t) * displayOrbitRadius,
-    cy: Math.cos(t) * displayOrbitRadius,
+    cx: Math.sin(t / P) * displayOrbitRadius,
+    cy: Math.cos(t / P) * displayOrbitRadius,
     fill
   }
 }
 
 const orbitProps = ({orbit: {a}, color: stroke})=> {
   return {
-    r: a/500000,
+    r: a/800000,
     fill: "none",
     stroke,
     strokeWidth: 1,
