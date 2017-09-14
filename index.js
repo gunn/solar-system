@@ -26,8 +26,7 @@ class App extends React.Component {
     return (
       <div>
         <style>{style}</style>
-        <h1>Solar System</h1>
-    
+
         <SolarSystem {...this.state} />
       </div>
     )
@@ -45,7 +44,7 @@ const PLANETS = [{
   },
   {
   name: "Mercury",
-    radius: 2000,
+    radius: 2440,
     color: "#fecdf5",
     orbit: {
       a: 57909050,
@@ -54,7 +53,7 @@ const PLANETS = [{
   },
   {
   name: "Venus",
-    radius: 4000,
+    radius: 6052,
     color: "#fefe00",
     orbit: {
       a: 108208000,
