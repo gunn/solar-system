@@ -34,7 +34,14 @@ class App extends React.Component {
   }
 }
 
-const PLANETS = [
+const PLANETS = [  {
+  name: "Sun",
+    radius: 16371,
+    color: "#DD5",
+    orbit: {
+      a: 0
+    }
+  },
   {
     name: "Earth",
     radius: 6371,
@@ -53,12 +60,27 @@ const PLANETS = [
   }
 ]
 
-const bodyProps  = ({radius, color: fill})=> (
-  {r: radius/400, fill}
-)
-const orbitProps = ({orbit: {a}, color: stroke})=> (
-  {r: a/500000, fill: "none", stroke, strokeWidth: 1}
-)
+const bodyProps  = ({orbit: {a}, radius, color: fill})=> {
+  const displayOrbitRadius = a/500000
+  const t = new Date() / 2000
+
+  return {
+    r: radius/400,
+    cx: Math.sin(t) * displayOrbitRadius,
+    cy: Math.cos(t) * displayOrbitRadius,
+    fill
+  }
+}
+
+const orbitProps = ({orbit: {a}, color: stroke})=> {
+  return {
+    r: a/500000,
+    fill: "none",
+    stroke,
+    strokeWidth: 1,
+    strokeOpacity: 0.5
+  }
+}
 
 const SolarSystem = ({width, height})=> {
   return (
@@ -100,5 +122,9 @@ const STYLES = `
 `
 
 
-const element = document.getElementById('app')
-render(<App style={STYLES}/>, element)
+const element = document.getElementById('app');
+
+(function doRender() {
+  render(<App style={STYLES}/>, element)
+  window.requestAnimationFrame(doRender)
+})()
